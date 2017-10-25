@@ -1,0 +1,13 @@
+[package]
+name = "kraken-server"
+version = "0.1.0"
+authors = ["Sandor Pecsi <specsi@mimecast.com>"]
+
+[dependencies]
+bytes = "*"
+futures = "*"
+kraken-proto = { path = "../kraken-proto" }
+native-tls = "*"
+tokio-service = "*"
+tokio-proto = "*"
+tokio-tls = { version = "*", features = [ "tokio-proto" ] }

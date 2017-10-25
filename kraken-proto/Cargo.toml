@@ -1,0 +1,10 @@
+[package]
+name = "kraken-proto"
+version = "0.1.0"
+authors = ["Sandor Pecsi <specsi@mimecast.com>"]
+
+[dependencies]
+bytes = "*"
+kraken-smtp = { path = "../kraken-smtp" }
+tokio-io = "*"
+tokio-proto = "*"
