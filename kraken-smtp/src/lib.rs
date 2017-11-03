@@ -6,6 +6,7 @@ use self::message::Message;
 mod address;
 mod message;
 
+#[derive(Debug, PartialEq)]
 pub enum ClientCommand {
     Ehlo(EhloDomain),
     MailFrom(AddressSpec),
@@ -14,11 +15,13 @@ pub enum ClientCommand {
     BinaryData(Message),
     Reset,
     NoOp,
-    Quit
+    Quit,
+    UnknownCommand(String)
 }
 
+#[derive(Debug, PartialEq)]
 pub struct EhloDomain {
-    domain: String
+    pub domain: String
 }
 
 impl EhloDomain {
@@ -27,19 +30,42 @@ impl EhloDomain {
     }
 }
 
+#[derive(Debug)]
 pub struct ServerReply {
     pub reply_code: ServerReplyCode,
     pub reply_lines: Vec<String>
 }
 
+#[derive(Debug, PartialEq)]
 pub enum ServerReplyCode {
-    GenericOk
+    // Normal responses
+    ServerReady,
+    ConnectionClosed,
+    GenericOk,
+    DataReady,
+    // Rejections
+    TemporaryRejection,
+    // Errors
+    SyntaxError,
+    SyntaxParamError,
+    NotImplemented,
+    BadAddress,
+    BadSequence
 }
 
 impl ServerReplyCode {
     pub fn reply_code(&self) -> usize {
         match *self {
-            ServerReplyCode::GenericOk => 250
+            ServerReplyCode::ServerReady        => 220,
+            ServerReplyCode::ConnectionClosed   => 221,
+            ServerReplyCode::GenericOk          => 250,
+            ServerReplyCode::DataReady          => 354,
+            ServerReplyCode::TemporaryRejection => 451,
+            ServerReplyCode::SyntaxError        => 500,
+            ServerReplyCode::SyntaxParamError   => 501,
+            ServerReplyCode::NotImplemented     => 502,
+            ServerReplyCode::BadSequence        => 503,
+            ServerReplyCode::BadAddress         => 510,
         }
     }
 }

@@ -10,3 +10,10 @@ impl<'a> From<&'a ServerConfig> for AuthService {
         AuthService {}
     }
 }
+
+impl AuthService {
+
+    pub fn run(&mut self) -> () {
+        
+    }
+}

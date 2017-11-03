@@ -7,6 +7,7 @@ authors = ["Sandor Pecsi <specsi@mimecast.com>"]
 bytes = "*"
 futures = "*"
 kraken-proto = { path = "../kraken-proto" }
+kraken-smtp = { path = "../kraken-smtp" }
 native-tls = "*"
 tokio-service = "*"
 tokio-proto = "*"
