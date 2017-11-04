@@ -16,6 +16,16 @@ mod server {
 
     #[test]
     fn all_common_newline_variations_are_recognised() {
+        test_server_decode("quit\r\n", ClientCommand::Quit);
+        test_server_decode("quit\n", ClientCommand::Quit);
+    }
+
+    #[test]
+    fn client_messages_are_case_insensitive() {
+        test_server_decode("quit\r\n", ClientCommand::Quit);
+        test_server_decode("Quit\r\n", ClientCommand::Quit);
+        test_server_decode("QUIT\r\n", ClientCommand::Quit);
+        test_server_decode("quIt\r\n", ClientCommand::Quit);
     }
 
     #[test]

@@ -12,6 +12,18 @@ impl Decoder for SmtpServerCodec {
 
     /// Decode a raw message sent by an SMTP client
     fn decode(&mut self, buf: &mut BytesMut) -> Result<Option<ClientCommand>> {
+        {
+            let pr = buf.iter().position(|&b| b == b'\r');
+            let pn = buf.iter().position(|&b| b == b'\r');
+
+            let start = pr.or(pn);
+
+            if let Some(i) = start {
+                let line = buf.split_to(i);
+
+            }
+        }
+
         // This very naive implementation just looks for an end line character
         if let Some(i) = buf.iter().position(|&b| b == b'\n') {
             let line = buf.split_to(i);
