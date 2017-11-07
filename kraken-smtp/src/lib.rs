@@ -1,22 +1,23 @@
 use std::io::Error;
 use std::fmt;
-use self::address::AddressSpec;
+use self::address::EnvelopeAddress;
 use self::message::Message;
 
-mod address;
-mod message;
+pub mod address;
+pub mod message;
 
 #[derive(Debug, PartialEq)]
 pub enum ClientCommand {
     Ehlo(EhloDomain),
-    MailFrom(AddressSpec),
-    ReceiptTo(AddressSpec),
-    Data(Message),
-    BinaryData(Message),
+    MailFrom(EnvelopeAddress),
+    ReceiptTo(EnvelopeAddress),
+    DataBegin,
+    BinaryDataBegin,
     Reset,
     NoOp,
     Quit,
-    UnknownCommand(String)
+    UnknownCommand(String),
+    LineTooLong
 }
 
 #[derive(Debug, PartialEq)]
@@ -56,11 +57,16 @@ pub enum ServerReplyCode {
 impl ServerReplyCode {
     pub fn reply_code(&self) -> usize {
         match *self {
+            // Positive preliminary replies
+            // Positive completion replies
             ServerReplyCode::ServerReady        => 220,
             ServerReplyCode::ConnectionClosed   => 221,
             ServerReplyCode::GenericOk          => 250,
+            // Positive intermediate replies
             ServerReplyCode::DataReady          => 354,
+            // Transient negative completion replies
             ServerReplyCode::TemporaryRejection => 451,
+            // Permanent negative completion replies
             ServerReplyCode::SyntaxError        => 500,
             ServerReplyCode::SyntaxParamError   => 501,
             ServerReplyCode::NotImplemented     => 502,

@@ -4,6 +4,11 @@ pub enum Address {
     AddressGroup(AddressGroup)
 }
 
+#[derive(Debug, PartialEq)]
+pub enum EnvelopeAddress {
+    AddressSpec(AddressSpec),
+    NullAddress
+}
 
 #[derive(Debug, PartialEq)]
 pub enum MailBox {
@@ -39,12 +44,12 @@ pub struct AngleAddress {
 
 #[derive(Debug, PartialEq)]
 pub struct AddressSpec {
-    local_part: String,
-    domain: DomainSpec
+    pub local_part: String,
+    pub domain: DomainSpec
 }
 
 // TODO this class doesn't actually follow the RFC
 #[derive(Debug, PartialEq)]
 pub struct DomainSpec {
-    domain_name: String
+    pub domain_name: String
 }
