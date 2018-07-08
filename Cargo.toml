@@ -1,0 +1,9 @@
+[package]
+name = "kraken"
+version = "0.1.0"
+authors = ["Alex Pecsi <alex.pecsi@gmail.com>"]
+
+[dependencies]
+bytes = "*"
+futures = "*"
+
