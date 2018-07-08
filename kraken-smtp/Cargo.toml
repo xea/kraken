@@ -1,6 +1,0 @@
-[package]
-name = "kraken-smtp"
-version = "0.1.0"
-authors = ["Sandor Pecsi <specsi@mimecast.com>"]
-
-[dependencies]
