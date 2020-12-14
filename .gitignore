@@ -17,3 +17,8 @@ Cargo.lock
 
 /target
 #Cargo.lock
+#
+.idea
+*.pem
+*.csr
+*.der
